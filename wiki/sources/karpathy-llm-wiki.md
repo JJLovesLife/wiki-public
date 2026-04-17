@@ -31,5 +31,7 @@ Karpathy proposes a pattern where an LLM incrementally builds and maintains a pe
 ## Related Pages
 
 - [[wiki/index]]
+- [[wiki/sources/obsidian-cli-help]]
+- [[wiki/syntheses/obsidian-cli-for-wiki-maintenance]]
 - [[AGENTS]]
 - [[log]]

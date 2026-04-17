@@ -13,7 +13,7 @@ The goal is to maintain a persistent, interlinked markdown knowledge base in `wi
   - If a source needs correction, add a new source or capture the correction in a wiki page.
 - LLM-owned knowledge layer: `wiki/`, `log.md`
   - The LLM may create and update these as part of normal ingest, query, and lint work.
-- Shared operational docs: `AGENTS.md`, `README.md`
+- Shared operational docs and helpers: `AGENTS.md`, `README.md`, `scripts/obsidian-wiki-health.sh`
   - Update these only when the workflow or structure actually changes.
 - Everything else is user-owned unless the user explicitly asks for changes.
 
@@ -25,6 +25,7 @@ The goal is to maintain a persistent, interlinked markdown knowledge base in `wi
 - `wiki/concepts/` holds synthesized concept pages when a topic earns its own durable page.
 - `wiki/entities/` holds pages for people, organizations, tools, places, or other named entities.
 - `wiki/syntheses/` holds durable answers that originated from queries.
+- `scripts/obsidian-wiki-health.sh` is an Obsidian-aware lint helper for the maintained `wiki/` layer.
 - `log.md` is a brief chronological history of ingests, queries, lint passes, and major maintenance.
 
 ## Naming Conventions
@@ -42,7 +43,7 @@ The goal is to maintain a persistent, interlinked markdown knowledge base in `wi
 
 - Prefer updating an existing page over creating a near-duplicate.
 - Keep internal links dense enough that related pages are easy to follow in Obsidian.
-- Keep claims anchored to source pages. Concept, entity, and synthesis pages should include a `Supporting sources` section.
+- Keep claims anchored to source pages. Concept and entity pages should include a `## Supporting Sources` section. Synthesis pages should include `## Evidence` with citations back to relevant wiki pages and, when useful, raw sources.
 - Preserve uncertainty and disagreement. If newer sources conflict with older ones, note the conflict instead of silently overwriting it.
 - Keep `log.md` brief. Detailed history belongs in Git.
 - Do not create a separate `templates/` system unless the user asks for it. The required page shapes live in this file.
@@ -91,7 +92,7 @@ Every file in `wiki/syntheses/` should include these sections:
 Use this workflow when the user asks to process a new source.
 
 1. Confirm the raw source exists in `sources/files/`.
-2. If the user only provided a URL, fetch a stable local copy into `sources/files/slug.ext` without editing the contents.
+2. If the user only provided a URL, fetch a stable local copy into `sources/files/slug.ext` using a direct download tool such as `curl` so the stored raw source is an exact local copy without editing, normalizing, or reformatting the contents.
 3. Read `wiki/index.md`, the raw source, and any obviously related pages.
 4. Create or update the corresponding source note in `wiki/sources/`, including its source metadata.
 5. Update all materially affected concept, entity, or synthesis pages.
@@ -114,9 +115,11 @@ Use this workflow when answering questions against the wiki.
 Use this workflow when checking the health of the wiki.
 
 1. Look for contradictions, stale claims, orphan pages, missing cross-references, missing source pages, broken links, and concept gaps.
-2. Make small maintenance fixes directly when the intent is clear.
-3. If the lint pass reveals a larger structural issue, summarize it clearly for the user.
-4. Update `wiki/index.md` and `log.md` whenever the lint pass produces durable changes.
+2. When using Obsidian-aware link checks, treat `wiki/` as the primary health surface. Raw source copies under `sources/files/` may contain upstream wikilinks and should not automatically be treated as wiki breakage.
+3. Use `scripts/obsidian-wiki-health.sh` when it fits the task, or perform equivalent checks manually.
+4. Make small maintenance fixes directly when the intent is clear.
+5. If the lint pass reveals a larger structural issue, summarize it clearly for the user.
+6. Update `wiki/index.md` and `log.md` whenever the lint pass produces durable changes.
 
 ## Operational Defaults
 
@@ -124,3 +127,4 @@ Use this workflow when checking the health of the wiki.
 - Treat `wiki/sources/` as the canonical set of ingested source notes.
 - Treat `log.md` as append-only operational history.
 - Keep raw sources immutable and keep the wiki as the maintained interpretation layer.
+- For Obsidian CLI linting, judge wiki health primarily on `wiki/`, not on upstream wikilinks embedded inside raw source copies.
