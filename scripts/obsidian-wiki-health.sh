@@ -73,6 +73,58 @@ check_shapes() {
   printf '%s files checked: %d, issues: %d\n' "$label" "$checked" "$issues"
 }
 
+check_source_frontmatter() {
+  local folder="$1"
+  local label="$2"
+  local -a files=()
+  local properties=""
+  local property=""
+  local file=""
+  local -a missing=()
+  local checked=0
+  local issues=0
+
+  mapfile -t files < <(obsidian files folder="$folder" ext=md || true)
+
+  for file in "${files[@]}"; do
+    if [[ -z "$file" ]]; then
+      continue
+    fi
+
+    checked=$((checked + 1))
+    properties="$(obsidian properties path="$file" format=json 2>/dev/null || true)"
+
+    if ! jq -e 'type == "object"' <<<"$properties" >/dev/null 2>&1; then
+      printf 'Schema issue: %s missing YAML frontmatter\n' "$file"
+      issues=$((issues + 1))
+      failures=$((failures + 1))
+      continue
+    fi
+
+    missing=()
+    for property in type source_slug local_file; do
+      if ! jq -e --arg property "$property" 'has($property) and .[$property] != null and .[$property] != ""' <<<"$properties" >/dev/null 2>&1; then
+        missing+=("$property")
+      fi
+    done
+
+    if ! jq -e '.type == "source"' <<<"$properties" >/dev/null 2>&1; then
+      missing+=("type=source")
+    fi
+
+    if ((${#missing[@]} > 0)); then
+      local missing_text
+      missing_text="$(printf '%s, ' "${missing[@]}")"
+      missing_text="${missing_text%, }"
+      printf 'Schema issue: %s missing/invalid [%s]\n' "$file" "$missing_text"
+      issues=$((issues + 1))
+      failures=$((failures + 1))
+    fi
+  done
+
+  printf '%s files checked: %d, issues: %d\n' "$label" "$checked" "$issues"
+}
+
 require_command obsidian
 require_command jq
 
@@ -113,8 +165,9 @@ if ((${#wiki_deadends[@]} > 0)); then
   failures=$((failures + 1))
 fi
 
+check_source_frontmatter 'wiki/sources' 'Source note frontmatter'
+
 check_shapes 'wiki/sources' 'Source note schema' \
-  'Source Metadata' \
   'Summary' \
   'Key Takeaways' \
   'Implications For This Wiki' \

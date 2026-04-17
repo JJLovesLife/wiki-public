@@ -1,13 +1,15 @@
+---
+type: source
+title: Obsidian CLI
+author: Obsidian Help
+ingested_on: 2026-04-17
+source_slug: obsidian-cli-help
+local_file: sources/files/obsidian-cli-help.md
+original_url: https://obsidian.md/help/cli
+retrieved_on: 2026-04-17
+---
+
 # Obsidian CLI Help
-
-## Source Metadata
-
-- Title: `Obsidian CLI`
-- Author: Obsidian Help
-- Added: 2026-04-17
-- URL: [obsidian cli help](https://obsidian.md/help/cli)
-- Source Slug: `obsidian-cli-help`
-- Local File: [[sources/files/obsidian-cli-help]]
 
 ## Summary
 

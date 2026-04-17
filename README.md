@@ -13,7 +13,7 @@ This repository is an Obsidian-friendly personal knowledge base built around the
 
 - `sources/files/` stores immutable raw source files.
 - `wiki/` is the LLM-maintained knowledge layer.
-- `wiki/sources/` holds source notes and per-source metadata for ingested sources.
+- `wiki/sources/` holds source notes with YAML frontmatter metadata for ingested sources.
 - `wiki/concepts/` holds synthesized concept pages when topics grow beyond a single source note.
 - `wiki/entities/` holds named-entity pages.
 - `wiki/syntheses/` holds durable query outputs.
@@ -30,4 +30,5 @@ This repository is an Obsidian-friendly personal knowledge base built around the
 
 - Raw source files are immutable after creation.
 - The wiki is expected to evolve continuously as more sources are added.
-- The page shapes and maintenance workflow live in `AGENTS.md`; there is intentionally no separate `templates/` directory in this first version.
+- The page shapes and maintenance workflow live in `AGENTS.md`; source notes use YAML frontmatter for stable machine-readable metadata.
+- There is intentionally no separate `templates/` directory in this first version.

@@ -15,3 +15,8 @@ Append-only operational history for this wiki.
 - Added [[wiki/syntheses/obsidian-cli-for-wiki-maintenance]] to capture the most useful CLI workflows for this vault.
 - Added `scripts/obsidian-wiki-health.sh` for Obsidian-aware wiki health checks.
 - Updated [[wiki/index]] and [[AGENTS]] to document the new source, synthesis, exact-copy URL ingest rule, and wiki-only Obsidian lint guidance.
+
+## [2026-04-17] schema | yaml frontmatter for source notes
+- Updated [[AGENTS]] so `wiki/sources/` uses YAML frontmatter as the canonical metadata layer for source notes.
+- Converted [[wiki/sources/karpathy-llm-wiki]] and [[wiki/sources/obsidian-cli-help]] from Markdown metadata blocks to frontmatter.
+- Updated [[README]] to reflect the frontmatter-based source-note shape.

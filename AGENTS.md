@@ -53,15 +53,23 @@ The goal is to maintain a persistent, interlinked markdown knowledge base in `wi
 
 ### Source Pages
 
-Every file in `wiki/sources/` should include these sections:
+Every file in `wiki/sources/` should begin with YAML frontmatter for stable machine-readable metadata, followed by these sections:
 
-1. `## Source Metadata`
-2. `## Summary`
-3. `## Key Takeaways`
-4. `## Implications For This Wiki`
-5. `## Related Pages`
+1. `## Summary`
+2. `## Key Takeaways`
+3. `## Implications For This Wiki`
+4. `## Related Pages`
 
-`## Source Metadata` should normally include title, author if known, added date, URL if applicable, source slug, and a link to the local raw file.
+Source-page frontmatter should normally include these flat fields when known:
+
+- `type: source`
+- `title`
+- `author`
+- `ingested_on`
+- `source_slug`
+- `local_file`
+- `original_url` when the source came from a URL
+- `retrieved_on` when the source came from a URL fetch
 
 ### Concept And Entity Pages
 
@@ -94,7 +102,7 @@ Use this workflow when the user asks to process a new source.
 1. Confirm the raw source exists in `sources/files/`.
 2. If the user only provided a URL, fetch a stable local copy into `sources/files/slug.ext` using a direct download tool such as `curl` so the stored raw source is an exact local copy without editing, normalizing, or reformatting the contents.
 3. Read `wiki/index.md`, the raw source, and any obviously related pages.
-4. Create or update the corresponding source note in `wiki/sources/`, including its source metadata.
+4. Create or update the corresponding source note in `wiki/sources/`, including YAML frontmatter metadata.
 5. Update all materially affected concept, entity, or synthesis pages.
 6. Update `wiki/index.md` so every new or materially changed page is represented by a one-line summary.
 7. Append a brief entry to `log.md` using the format `## [YYYY-MM-DD] action | subject`.

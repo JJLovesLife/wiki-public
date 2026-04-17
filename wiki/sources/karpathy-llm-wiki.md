@@ -1,13 +1,15 @@
+---
+type: source
+title: LLM Wiki
+author: Andrej Karpathy
+ingested_on: 2026-04-17
+source_slug: karpathy-llm-wiki
+local_file: sources/files/karpathy-llm-wiki.md
+original_url: https://gist.githubusercontent.com/karpathy/442a6bf555914893e9891c11519de94f/raw/ac46de1ad27f92b28ac95459c782c07f6b8c964a/llm-wiki.md
+retrieved_on: 2026-04-17
+---
+
 # Karpathy LLM Wiki
-
-## Source Metadata
-
-- Title: `LLM Wiki`
-- Author: Andrej Karpathy
-- Added: 2026-04-17
-- URL: [karpathy gist](https://gist.githubusercontent.com/karpathy/442a6bf555914893e9891c11519de94f/raw/ac46de1ad27f92b28ac95459c782c07f6b8c964a/llm-wiki.md)
-- Source Slug: `karpathy-llm-wiki`
-- Local File: [[sources/files/karpathy-llm-wiki]]
 
 ## Summary
 
