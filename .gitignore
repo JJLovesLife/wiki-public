@@ -1,0 +1,8 @@
+# Ignore volatile UI-related state (prevents merge conflicts)
+.obsidian/workspace.json
+.obsidian/graph.json
+
+# Ignore cache and local data
+.obsidian/cache/
+.obsidian/indexed_db/
+.trash/

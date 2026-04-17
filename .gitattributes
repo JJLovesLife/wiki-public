@@ -1,0 +1,2 @@
+# Keep JSON files normalized to LF across platforms.
+*.json text eol=lf
