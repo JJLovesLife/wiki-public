@@ -73,9 +73,12 @@ check_shapes() {
   printf '%s files checked: %d, issues: %d\n' "$label" "$checked" "$issues"
 }
 
-check_source_frontmatter() {
+check_frontmatter() {
   local folder="$1"
   local label="$2"
+  local expected_type="$3"
+  shift 3
+  local -a required=("$@")
   local -a files=()
   local properties=""
   local property=""
@@ -102,14 +105,19 @@ check_source_frontmatter() {
     fi
 
     missing=()
-    for property in type source_slug local_file; do
-      if ! jq -e --arg property "$property" 'has($property) and .[$property] != null and .[$property] != ""' <<<"$properties" >/dev/null 2>&1; then
+    for property in "${required[@]}"; do
+      if ! jq -e --arg property "$property" '
+        has($property)
+        and .[$property] != null
+        and .[$property] != ""
+        and (if (.[$property] | type) == "array" then (.[$property] | length) > 0 else true end)
+      ' <<<"$properties" >/dev/null 2>&1; then
         missing+=("$property")
       fi
     done
 
-    if ! jq -e '.type == "source"' <<<"$properties" >/dev/null 2>&1; then
-      missing+=("type=source")
+    if ! jq -e --arg expected_type "$expected_type" '.type == $expected_type' <<<"$properties" >/dev/null 2>&1; then
+      missing+=("type=$expected_type")
     fi
 
     if ((${#missing[@]} > 0)); then
@@ -165,7 +173,14 @@ if ((${#wiki_deadends[@]} > 0)); then
   failures=$((failures + 1))
 fi
 
-check_source_frontmatter 'wiki/sources' 'Source note frontmatter'
+check_frontmatter 'wiki/sources' 'Source note frontmatter' 'source' \
+  source_slug \
+  local_file
+
+check_frontmatter 'wiki/inspections' 'Inspection frontmatter' 'inspection' \
+  repo \
+  question \
+  scope_paths
 
 check_shapes 'wiki/sources' 'Source note schema' \
   'Summary' \
@@ -173,17 +188,25 @@ check_shapes 'wiki/sources' 'Source note schema' \
   'Implications For This Wiki' \
   'Related Pages'
 
+check_shapes 'wiki/inspections' 'Inspection schema' \
+  'Question' \
+  'Answer' \
+  'Trace' \
+  'Evidence' \
+  'Uncertainty' \
+  'Related Pages'
+
 check_shapes 'wiki/concepts' 'Concept schema' \
   'Definition' \
   'Why It Matters' \
-  'Supporting Sources' \
+  'Supporting Evidence' \
   'Related Pages' \
   'Open Questions'
 
 check_shapes 'wiki/entities' 'Entity schema' \
   'Definition' \
   'Why It Matters' \
-  'Supporting Sources' \
+  'Supporting Evidence' \
   'Related Pages' \
   'Open Questions'
 

@@ -7,6 +7,10 @@ Read this file first when navigating the wiki.
 - [[wiki/sources/karpathy-llm-wiki]] - Source note for Andrej Karpathy's canonical `LLM Wiki` gist, the seed source for this vault.
 - [[wiki/sources/obsidian-cli-help]] - Source note for Obsidian's CLI documentation, focused on vault-aware automation and inspection.
 
+## Inspections
+
+- None yet.
+
 ## Concepts
 
 - None yet.

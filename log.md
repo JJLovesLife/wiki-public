@@ -20,3 +20,9 @@ Append-only operational history for this wiki.
 - Updated [[AGENTS]] so `wiki/sources/` uses YAML frontmatter as the canonical metadata layer for source notes.
 - Converted [[wiki/sources/karpathy-llm-wiki]] and [[wiki/sources/obsidian-cli-help]] from Markdown metadata blocks to frontmatter.
 - Updated [[README]] to reflect the frontmatter-based source-note shape.
+
+## [2026-04-18] schema | add code inspection notes
+- Added `wiki/inspections/` as the home for code-derived, multi-file investigation notes anchored to repository snapshots.
+- Updated [[AGENTS]] and [[README]] to distinguish document source notes from code inspections and to use `## Supporting Evidence` for concept and entity pages.
+- Updated [[wiki/index]] to list inspection pages as a first-class section.
+- Updated `scripts/obsidian-wiki-health.sh` to lint inspection notes without requiring `repo_commit` when a stable commit is not available.
