@@ -9,7 +9,7 @@ Read this file first when navigating the wiki.
 
 ## Inspections
 
-- None yet.
+- [[wiki/inspections/mesa-radv-graphics-queue-family-detection]] - Traces RADV 如何判断 `vkGetPhysicalDeviceQueueFamilyProperties2` 是否 expose graphics queue family, from `radv_graphics_queue_enabled()` down to `DRM_AMDGPU_INFO` `available_rings`.
 
 ## Concepts
 
