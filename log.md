@@ -33,3 +33,8 @@ Append-only operational history for this wiki.
 - Captured the `AMD_USERQ` exception where `num_queues` may be forced to `1` without counting `available_rings`, and updated [[wiki/index]].
 - Rewrote [[wiki/inspections/mesa-radv-graphics-queue-family-detection]] into a mixed Chinese/English style so the prose is faster to scan while code terms, symbols, and paths stay in English.
 - Updated [[wiki/index]] to match the same mixed style.
+
+## [2026-04-20] inspect | mesa radv init dispatch tables layers
+- Added [[wiki/inspections/mesa-radv-init-dispatch-tables-layers]] as a concise note on how `init_dispatch_tables()` builds RADV-internal device dispatch layers.
+- Captured the main idea that RADV uses a Vulkan-layer-like design internally and inserts `annotate` / `app` / `rgp` / `rra` / `rmv` / `ctx_roll` middle layers based on debug, trace, app-workaround, and platform-specific conditions.
+- Updated [[wiki/index]].
