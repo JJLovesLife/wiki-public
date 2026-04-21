@@ -38,3 +38,9 @@ Append-only operational history for this wiki.
 - Added [[wiki/inspections/mesa-radv-init-dispatch-tables-layers]] as a concise note on how `init_dispatch_tables()` builds RADV-internal device dispatch layers.
 - Captured the main idea that RADV uses a Vulkan-layer-like design internally and inserts `annotate` / `app` / `rgp` / `rra` / `rmv` / `ctx_roll` middle layers based on debug, trace, app-workaround, and platform-specific conditions.
 - Updated [[wiki/index]].
+
+## [2026-04-21] inspect | libdrm amdgpu vamgr address space split
+- Added [[wiki/inspections/libdrm-amdgpu-vamgr-address-space-split]] to explain how `amdgpu_vamgr.c` splits GPU VA into `low/high x 32-bit/rest` buckets and selects among them during allocation.
+- Captured that the `low/high` split follows KMD-reported canonical VA halves, while the extra `32-bit` split preserves a dedicated 4 GiB-constrained pool for clients that need it.
+- Documented `va_base_required` as the fixed-base allocation path that suits replay-style workflows, while noting that a concrete RenderDoc call site is not present in this repo snapshot.
+- Updated [[wiki/index]].
