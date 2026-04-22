@@ -20,14 +20,15 @@ Karpathy proposes a pattern where an LLM incrementally builds and maintains a pe
 - The main artifact is a maintained wiki, not just a retrieval layer over documents.
 - The architecture has three parts: immutable raw sources, an LLM-owned wiki, and a schema document that defines maintenance behavior.
 - The recurring workflows are ingest, query, and lint.
-- `index.md` and `log.md` are special navigation files with different jobs: one content-oriented, one chronological.
+- The original pattern treats `index.md` and `log.md` as special navigation files with different jobs: one content-oriented, one chronological.
 - Obsidian and Git make the pattern practical without requiring heavy retrieval infrastructure at small to medium scale.
 
 ## Implications For This Wiki
 
 - Keep exact local copies of source material under `sources/files/`.
 - Treat `AGENTS.md` as the schema layer and evolve it deliberately.
-- Update `wiki/index.md` and `log.md` whenever a durable change lands.
+- Keep `wiki/index.md` current, and use Git commit history rather than a maintained `log.md` for chronology in this vault.
+- Use structured commit prefixes so Git preserves the high-level action labels that `log.md` would otherwise have carried.
 - Save reusable answers from future queries into `wiki/syntheses/` so knowledge compounds over time.
 
 ## Related Pages
@@ -36,4 +37,3 @@ Karpathy proposes a pattern where an LLM incrementally builds and maintains a pe
 - [[wiki/sources/obsidian-cli-help]]
 - [[wiki/syntheses/obsidian-cli-for-wiki-maintenance]]
 - [[AGENTS]]
-- [[log]]

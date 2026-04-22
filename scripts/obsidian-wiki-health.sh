@@ -142,7 +142,8 @@ printf 'Vault path: %s\n' "$(obsidian vault info=path)"
 
 # Raw sources are immutable copies and may include upstream wikilinks that do not
 # belong to this vault, so unresolved-link health should ignore entries that come
-# only from sources/files/ while still checking maintained notes like log.md.
+# only from sources/files/ while still checking maintained notes under wiki/ and
+# the root operational docs.
 wiki_unresolved="$(obsidian unresolved counts verbose format=json | jq '
   def source_paths:
     if .sources == null then []

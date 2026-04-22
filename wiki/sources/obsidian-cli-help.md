@@ -35,4 +35,4 @@ The Obsidian CLI exposes the running Obsidian app and the active vault to termin
 - [[wiki/index]]
 - [[wiki/syntheses/obsidian-cli-for-wiki-maintenance]]
 - [[wiki/sources/karpathy-llm-wiki]]
-- [[log]]
+- [[AGENTS]]

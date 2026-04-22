@@ -11,7 +11,7 @@ The goal is to maintain a persistent, interlinked markdown knowledge base in `wi
 - Immutable raw sources: `sources/files/`
   - Never edit a raw source after it has been added.
   - If a source needs correction, add a new source or capture the correction in a wiki page.
-- LLM-owned knowledge layer: `wiki/`, `log.md`
+- LLM-owned knowledge layer: `wiki/`
   - The LLM may create and update these as part of normal ingest, query, and lint work.
 - Shared operational docs and helpers: `AGENTS.md`, `README.md`, `scripts/obsidian-wiki-health.sh`
   - Update these only when the workflow or structure actually changes.
@@ -27,7 +27,6 @@ The goal is to maintain a persistent, interlinked markdown knowledge base in `wi
 - `wiki/entities/` holds pages for people, organizations, tools, places, or other named entities.
 - `wiki/syntheses/` holds durable answers that originated from queries.
 - `scripts/obsidian-wiki-health.sh` is an Obsidian-aware lint helper for the maintained `wiki/` layer.
-- `log.md` is a brief chronological history of ingests, queries, lint passes, and major maintenance.
 
 ## Naming Conventions
 
@@ -49,9 +48,39 @@ The goal is to maintain a persistent, interlinked markdown knowledge base in `wi
 - Keep claims anchored to evidence pages. Concept and entity pages should include a `## Supporting Evidence` section. Synthesis pages should include `## Evidence` with citations back to relevant source notes, inspection notes, and, when useful, raw sources.
 - For code-derived claims, prefer a single inspection page in `wiki/inspections/` over fake per-file source notes. Anchor file and line references to `repo_commit` and prefer commit-pinned URLs when available.
 - Preserve uncertainty and disagreement. If newer sources conflict with older ones, note the conflict instead of silently overwriting it.
-- Keep `log.md` brief. Detailed history belongs in Git.
+- Git commit history is the canonical operational history for this wiki.
+- Prefer small, logically grouped commits so the vault's evolution stays easy to review.
 - Do not create a separate `templates/` system unless the user asks for it. The required page shapes live in this file.
 - Do not create concept pages that only restate a single source note unless the user asks for that extra structure or the page is clearly becoming a durable hub.
+
+## Git Commit Message Schema
+
+Git replaces `log.md` as the durable operational history for this vault. When creating commits, use a consistent message shape so history is readable inside Git itself.
+
+- Prefer one durable wiki action per commit when practical. Split unrelated topics into separate commits.
+- Use a subject line in the form `<kind>: <subject>`.
+- Keep `<subject>` short, human-readable, and specific to the source slug, inspection slug, concept, entity, or schema change.
+- Common `kind` values:
+  - `ingest` for new raw sources and their source notes.
+  - `inspect` for code investigation notes.
+  - `synthesize` for durable query answers saved to the wiki.
+  - `concept` for concept-page additions or major updates.
+  - `entity` for entity-page additions or major updates.
+  - `schema` for workflow, layout, naming, or page-shape changes.
+  - `lint` for cross-link, metadata, wording, or structural maintenance.
+  - `reorg` for renames, moves, and larger vault reshaping.
+  - `docs` for README or helper-documentation updates that are not schema changes.
+- Add a body when the reason is not obvious from the subject or when the commit spans multiple files.
+- In the body, start with 1-2 sentences on why the change matters. Then optionally list the materially affected pages or inspected repository snapshot.
+- For inspection commits, include the inspected repository and commit hash in the body when that provenance is important.
+
+Examples:
+
+- `ingest: obsidian cli help`
+- `inspect: linux idr preload purpose`
+- `synthesize: obsidian cli for wiki maintenance`
+- `schema: replace log.md with git history`
+- `lint: repair source-note cross-links`
 
 ## Required Page Shapes
 
@@ -132,8 +161,7 @@ Use this workflow when the user asks to process a new source.
 4. Create or update the corresponding source note in `wiki/sources/`, including YAML frontmatter metadata.
 5. Update all materially affected concept, entity, or synthesis pages.
 6. Update `wiki/index.md` so every new or materially changed page is represented by a one-line summary.
-7. Append a brief entry to `log.md` using the format `## [YYYY-MM-DD] action | subject`.
-8. If the source is broad and the desired emphasis is unclear, ask the user a short targeted question. Otherwise make a reasonable first pass and let the user refine it.
+7. If the source is broad and the desired emphasis is unclear, ask the user a short targeted question. Otherwise make a reasonable first pass and let the user refine it.
 
 ### Inspect
 
@@ -145,8 +173,7 @@ Use this workflow when the user asks a question whose answer comes from source c
 4. Create or update a unified inspection note in `wiki/inspections/`, including YAML frontmatter metadata and exact evidence references.
 5. Update all materially affected concept, entity, or synthesis pages.
 6. Update `wiki/index.md` so every new or materially changed page is represented by a one-line summary.
-7. Append a brief entry to `log.md` using the format `## [YYYY-MM-DD] action | subject`.
-8. If the question is too broad for one inspection page, ask a short targeted question or split it into clearly named inspection pages.
+7. If the question is too broad for one inspection page, ask a short targeted question or split it into clearly named inspection pages.
 
 ### Query
 
@@ -154,9 +181,9 @@ Use this workflow when answering questions against the wiki.
 
 1. Read `wiki/index.md` first.
 2. Read the most relevant pages from `wiki/`.
-3. Read recent `log.md` entries when recency matters.
+3. Read page frontmatter and recent Git history when recency matters.
 4. Answer with citations to wiki pages and, when useful, raw source links.
-5. If the answer is durable and broadly useful, save it as a new or updated page under `wiki/syntheses/`. If the answer is primarily a repo-specific code investigation, save or update a page under `wiki/inspections/` instead. Then update `wiki/index.md` and `log.md`.
+5. If the answer is durable and broadly useful, save it as a new or updated page under `wiki/syntheses/`. If the answer is primarily a repo-specific code investigation, save or update a page under `wiki/inspections/` instead. Then update `wiki/index.md`.
 
 ### Lint
 
@@ -167,13 +194,13 @@ Use this workflow when checking the health of the wiki.
 3. Use `scripts/obsidian-wiki-health.sh` when it fits the task, or perform equivalent checks manually.
 4. Make small maintenance fixes directly when the intent is clear.
 5. If the lint pass reveals a larger structural issue, summarize it clearly for the user.
-6. Update `wiki/index.md` and `log.md` whenever the lint pass produces durable changes.
+6. Update `wiki/index.md` whenever the lint pass produces durable changes.
 
 ## Operational Defaults
 
 - Start navigation in `wiki/index.md`.
 - Treat `wiki/sources/` as the canonical set of ingested document source notes.
 - Treat `wiki/inspections/` as the canonical set of code-derived investigation notes.
-- Treat `log.md` as append-only operational history.
+- Treat Git history as the canonical operational history for the vault.
 - Keep raw sources immutable and keep the wiki as the maintained interpretation layer.
 - For Obsidian CLI linting, judge wiki health primarily on `wiki/`, not on upstream wikilinks embedded inside raw source copies.

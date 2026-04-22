@@ -8,7 +8,7 @@ This repository is an Obsidian-friendly personal knowledge base built around the
 - LLM workflow rules: `AGENTS.md`
 - Ingested source notes: `wiki/sources/`
 - Code inspection notes: `wiki/inspections/`
-- Chronological history: `log.md`
+- Change history: Git commit log
 
 ## Layout
 
@@ -26,7 +26,16 @@ This repository is an Obsidian-friendly personal knowledge base built around the
 2. Ask the LLM to ingest the source or inspect the code.
 3. Review `wiki/index.md`, the updated source note or inspection note, and any other updated wiki pages in Obsidian.
 4. Ask questions against the wiki and keep useful answers by filing them into `wiki/syntheses/` or `wiki/inspections/` as appropriate.
-5. Use Git for detailed history; keep `log.md` short.
+5. Use Git as the canonical history. Keep commits small and follow the commit message schema in `AGENTS.md`.
+
+## Git Commit Messages
+
+- Git replaces `log.md` as the operational history for this vault.
+- Prefer one durable wiki task per commit.
+- Use the subject format `<kind>: <subject>`.
+- Common kinds: `ingest`, `inspect`, `synthesize`, `concept`, `entity`, `schema`, `lint`, `reorg`, `docs`.
+- Add a short body when the reason or scope is not obvious.
+- Full commit-message rules live in `AGENTS.md`.
 
 ## Notes
 

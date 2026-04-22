@@ -25,8 +25,8 @@ Read this file first when navigating the wiki.
 
 - [[wiki/syntheses/obsidian-cli-for-wiki-maintenance]] - Practical Obsidian CLI commands for linting links, auditing note structure, and safely refactoring the vault.
 
-## Operational Files
+## Operational Docs
 
-- [[log]] - Brief chronological history of ingests and maintenance.
-- [[AGENTS]] - The schema that defines page shapes and workflows.
+- [[AGENTS]] - The schema that defines page shapes, workflows, and commit message conventions.
 - [[README]] - Repository overview and start-here instructions.
+- Git history - Canonical operational history for vault changes.
