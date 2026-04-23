@@ -180,7 +180,6 @@ check_frontmatter 'wiki/sources' 'Source note frontmatter' 'source' \
 
 check_frontmatter 'wiki/inspections' 'Inspection frontmatter' 'inspection' \
   repo \
-  question \
   scope_paths
 
 check_shapes 'wiki/sources' 'Source note schema' \

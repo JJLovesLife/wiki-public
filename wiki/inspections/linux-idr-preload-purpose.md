@@ -4,7 +4,6 @@ title: "linux idr_preload(): what it preloads, why it exists, and how it avoids 
 repo: linux
 repo_commit: 028ef9c96e96197026887c0f092424679298aae8
 inspected_on: 2026-04-22
-question: "idr_preload 是什么，为什么 `idr_alloc()` 常常要在 `spin_lock()` 外先 preload，它和可能睡眠的内存分配有什么关系"
 scope_paths:
   - include/linux/idr.h
   - lib/idr.c

@@ -4,7 +4,6 @@ title: "How RADV 判断 vkGetPhysicalDeviceQueueFamilyProperties2 里的 graphic
 repo: mesa
 repo_commit: e9d00909f5082218159541d647182176ed237e60
 inspected_on: 2026-04-18
-question: "RADV 是怎么判断 vkGetPhysicalDeviceQueueFamilyProperties2 应不应该 expose graphics queue family 的"
 scope_paths:
   - src/amd/vulkan/radv_physical_device.c
   - src/amd/vulkan/radv_physical_device.h

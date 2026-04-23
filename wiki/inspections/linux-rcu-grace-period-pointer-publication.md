@@ -4,7 +4,6 @@ title: "linux RCU: 指针发布、grace period 与旧对象回收的关系"
 repo: linux
 repo_commit: 028ef9c96e96197026887c0f092424679298aae8
 inspected_on: 2026-04-23
-question: "我对 Linux RCU 的这个理解对不对？"
 scope_paths:
   - Documentation/RCU/whatisRCU.rst
   - Documentation/RCU/rcu.rst

@@ -4,7 +4,6 @@ title: "RADV 的 init_dispatch_tables 如何用内部 layer 组织 device dispat
 repo: mesa
 repo_commit: 8418351c7c56f06312d1bbb285ce776b41f6790b
 inspected_on: 2026-04-20
-question: "RADV 的 init_dispatch_tables 在做什么，各层大概分别起什么作用"
 scope_paths:
   - src/amd/vulkan/radv_device.c
   - src/amd/vulkan/radv_device.h

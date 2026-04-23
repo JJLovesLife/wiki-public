@@ -122,7 +122,6 @@ Inspection-page frontmatter should normally include these fields when known:
 - `repo`
 - `repo_commit`
 - `inspected_on`
-- `question`
 - `scope_paths`
 
 If there are no uncertainties yet, say `None noted.`

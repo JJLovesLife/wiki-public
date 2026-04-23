@@ -4,7 +4,6 @@ title: "libdrm amdgpu_vamgr.c GPU VA split: canonical low/high halves, 32-bit bu
 repo: libdrm
 repo_commit: 8de45ef60d69472a0f8ba898f91250dac88bb81f
 inspected_on: 2026-04-21
-question: "amdgpu_vamgr.c 为什么把 GPU VA 拆成 `low/high x 32-bit/rest` 四个 manager，它们是怎么被选中的，以及 `va_base_required` 有什么用"
 scope_paths:
   - amdgpu/amdgpu_vamgr.c
   - amdgpu/amdgpu_internal.h
