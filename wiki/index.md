@@ -18,7 +18,8 @@ Read this file first when navigating the wiki.
 
 ## Concepts
 
-- None yet.
+- [[wiki/concepts/drm-mm]] - Explains `drm_mm` as DRM's caller-owned-node range allocator for abstract address spaces and placement ranges.
+- [[wiki/concepts/drm-vma-offset]] - Explains `drm_vma_offset` as the fake mmap offset-to-BO mapping layer built on `drm_mm`, including per-file access checks and the per-device namespace uncertainty.
 
 ## Entities
 
