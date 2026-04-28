@@ -15,6 +15,7 @@ Read this file first when navigating the wiki.
 - [[wiki/inspections/linux-dma-resv-shared-buffer-sync]] - Explains `dma_resv` as a per-buffer `ww_mutex` plus `dma_fence` container for shared, asynchronous, pipelined, and movable DMA buffers, and why not every DMA user needs it.
 - [[wiki/inspections/linux-idr-preload-purpose]] - Explains `idr_preload()` as the IDR-internal node preload path used before `spin_lock()`, so `idr_alloc(..., GFP_NOWAIT)` can avoid potentially sleeping allocation in the locked section.
 - [[wiki/inspections/linux-rcu-grace-period-pointer-publication]] - Explains Linux RCU as pointer publication plus deferred reclamation, grounding grace periods in `rcu_assign_pointer()`, Tree RCU `qsmask` tracking, and preempted-reader bookkeeping.
+- [[wiki/inspections/linux-rcu-child-reference-lifetime]] - Summarizes how RCU-published lookup structures can safely expose refcounted child objects, using `dma_resv_list` and `dma_fence` to show when immediate child `put` is safe.
 
 ## Concepts
 

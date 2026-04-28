@@ -75,4 +75,5 @@ None noted. 需要注意的是，“每个 CPU 经过一次 quiescent state”�
 
 ## Related Pages
 
+- [[wiki/inspections/linux-rcu-child-reference-lifetime]]
 - [[wiki/index]]

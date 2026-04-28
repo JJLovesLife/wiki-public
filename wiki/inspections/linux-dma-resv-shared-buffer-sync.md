@@ -53,4 +53,5 @@ scope_paths:
 
 ## Related Pages
 
+- [[wiki/inspections/linux-rcu-child-reference-lifetime]]
 - [[wiki/index]]
