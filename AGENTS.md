@@ -190,7 +190,7 @@ Use this workflow when checking the health of the wiki.
 
 1. Look for contradictions, stale claims, orphan pages, missing cross-references, missing source or inspection pages, broken links, and concept gaps.
 2. When using Obsidian-aware link checks, treat `wiki/` as the primary health surface. Raw source copies under `sources/files/` may contain upstream wikilinks and should not automatically be treated as wiki breakage.
-3. Use `scripts/obsidian-wiki-health.sh` when it fits the task, or perform equivalent checks manually.
+3. Use `scripts/obsidian-wiki-health.sh` before creating a commit or during a review-oriented health check; do not run it after every routine wiki update.
 4. Make small maintenance fixes directly when the intent is clear.
 5. If the lint pass reveals a larger structural issue, summarize it clearly for the user.
 6. Update `wiki/index.md` whenever the lint pass produces durable changes.
