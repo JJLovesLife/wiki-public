@@ -19,6 +19,7 @@ Read this file first when navigating the wiki.
 
 ## Concepts
 
+- [[wiki/concepts/cpu-sense-pins-kelvin-remote-voltage-sense]] - Explains CPU `_SENSE` pins as Kelvin-connected remote voltage sense points measured by the VR controller, including VCCIN_AUX synchronous buck feedback and VCC/VSS open-circuit protection behavior.
 - [[wiki/concepts/drm-mm]] - Explains `drm_mm` as DRM's caller-owned-node range allocator for abstract address spaces and placement ranges.
 - [[wiki/concepts/drm-vma-offset]] - Explains `drm_vma_offset` as the fake mmap offset-to-BO mapping layer built on `drm_mm`, including per-file access checks and the per-device namespace uncertainty.
 - [[wiki/concepts/opencode-usage-tips]] - Collects practical OpenCode usage tips, including observed active-file context behavior not covered by official docs.
