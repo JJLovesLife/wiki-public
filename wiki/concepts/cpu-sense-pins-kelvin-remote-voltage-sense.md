@@ -72,6 +72,7 @@ V_FB ~= (10 kΩ * V_AUX_SENSE_P + 15.8 kΩ * V_AUX_SENSE_N) / 25.8 kΩ
 
 ## Supporting Evidence
 
+- [[wiki/sources/intel-lga1700-learning-notes]]: LGA 1700 学习笔记把 `_SENSE` 后缀解释为开尔文连接远端电压检测，并记录 `VCC_SENSE / VSS_SENSE`、`VCCGT_SENSE / VSSGT_SENSE`、`VCCIN_AUX_SENSE / VSSIN_AUX_SENSE` 在开源 X86 主板供电实现中的连接观察。
 - User-provided LLM discussion, 2026-05-03: `_SENSE` pin 的作用是开尔文远端检测；`_SENSE` 与对应 CPU 供电/地节点在 CPU 端相连；检测由主板电源芯片完成，而不是 CPU 回报电压；开路保护需要区分 `VCC`/高端 sense 与 `VSS`/低端 sense 的安全偏置方向。
 - OSHWHub project, `【全网首发】X86电脑主板`, https://oshwhub.com/oshwhub/dian-nao-zhu-ban, observed 2026-05-03: 这是一个公开的 X86 电脑主板工程页面，页面列出 GPL 3.0、附件 `开源资料.zip` 和工程成员；用户将其作为 CPU `_SENSE` 远端检测与开路保护的开源实现证据。该工程未下载到 `sources/files/`，因此这里不把它作为本地 raw source 管理。
 - User-provided VCCIN_AUX schematic excerpt, 2026-05-04: 片段显示 `VCCIN_AUX_CPU` 由 `12V` 经高边/低边 MOSFET、`PH` 开关节点、`0.22 uH` 电感和输出电容构成同步降压；`AUX_SENSE_P` 通过 `100 Ω` 回退到本地 `VCCIN_AUX_CPU`，`AUX_SENSE_N` 通过 `100 Ω` 回退到 GND；`15.8 kΩ`/`10 kΩ` 网络把远端正负 sense 折算到 PWM/VR 控制器的单个 `FB` 引脚。
@@ -79,6 +80,8 @@ V_FB ~= (10 kΩ * V_AUX_SENSE_P + 15.8 kΩ * V_AUX_SENSE_N) / 25.8 kΩ
 ## Related Pages
 
 - [[wiki/index]]
+- [[wiki/sources/intel-lga1700-learning-notes]]
+- [[wiki/concepts/intel-lga1700-socket-signal-groups]]
 
 ## Open Questions
 

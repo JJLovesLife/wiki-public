@@ -4,6 +4,7 @@ Read this file first when navigating the wiki.
 
 ## Sources
 
+- [[wiki/sources/intel-lga1700-learning-notes]] - Source note for jjshao's Intel LGA 1700 and open X86 motherboard learning notes, covering socket signal groups, CPU/PCH routing, memory pins, and CPU power sense observations.
 - [[wiki/sources/karpathy-llm-wiki]] - Source note for Andrej Karpathy's canonical `LLM Wiki` gist, the seed source for this vault.
 - [[wiki/sources/obsidian-cli-help]] - Source note for Obsidian's CLI documentation, focused on vault-aware automation and inspection.
 
@@ -20,6 +21,7 @@ Read this file first when navigating the wiki.
 ## Concepts
 
 - [[wiki/concepts/cpu-sense-pins-kelvin-remote-voltage-sense]] - Explains CPU `_SENSE` pins as Kelvin-connected remote voltage sense points measured by the VR controller, including VCCIN_AUX synchronous buck feedback and VCC/VSS open-circuit protection behavior.
+- [[wiki/concepts/intel-lga1700-socket-signal-groups]] - Organizes Intel LGA 1700 socket pins into power/GND, CPU-PCH, PCIe, DDI, DDR memory, debug, and platform-control signal groups.
 - [[wiki/concepts/drm-mm]] - Explains `drm_mm` as DRM's caller-owned-node range allocator for abstract address spaces and placement ranges.
 - [[wiki/concepts/drm-vma-offset]] - Explains `drm_vma_offset` as the fake mmap offset-to-BO mapping layer built on `drm_mm`, including per-file access checks and the per-device namespace uncertainty.
 - [[wiki/concepts/opencode-usage-tips]] - Collects practical OpenCode usage tips, including observed active-file context behavior not covered by official docs.
