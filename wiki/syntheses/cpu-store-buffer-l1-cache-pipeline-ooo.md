@@ -92,5 +92,6 @@ while (true) {
 
 - [[wiki/concepts/cache-coherence]]
 - [[wiki/syntheses/cache-coherence-write-ownership-and-atomics]]
+- [[wiki/syntheses/cpu-write-combining-purpose]]
 - [[wiki/syntheses/cpu-cache-coherence-vs-special-concurrent-instructions]]
 - [[wiki/index]]
