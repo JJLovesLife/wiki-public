@@ -22,6 +22,7 @@ Read this file first when navigating the wiki.
 
 ## Concepts
 
+- [[wiki/concepts/cache-coherence]] - Defines cache coherence as the per-location or cache-line hardware foundation for shared cached memory, separate from cross-location memory ordering.
 - [[wiki/concepts/cpu-sense-pins-kelvin-remote-voltage-sense]] - Explains CPU `_SENSE` pins as Kelvin-connected remote voltage sense points measured by the VR controller, including VCCIN_AUX synchronous buck feedback and VCC/VSS open-circuit protection behavior.
 - [[wiki/concepts/intel-lga1700-socket-signal-groups]] - Organizes Intel LGA 1700 socket pins into power/GND, CPU-PCH, PCIe, DDI, DDR memory, debug, and platform-control signal groups.
 - [[wiki/concepts/drm-mm]] - Explains `drm_mm` as DRM's caller-owned-node range allocator for abstract address spaces and placement ranges.
@@ -34,6 +35,10 @@ Read this file first when navigating the wiki.
 
 ## Syntheses
 
+- [[wiki/syntheses/cache-coherence-write-ownership-and-atomics]] - Explains writable cache-line ownership, ordinary store ordering, atomic RMW behavior, x86 atomic load/store code generation, and why coherence is mainly per-location.
+- [[wiki/syntheses/cache-coherence-broadcast-scope]] - Explains why cache coherence does not require broadcasting every ordinary write to every core, contrasting local writes under ownership with snooping and directory-based protocols.
+- [[wiki/syntheses/cpu-store-buffer-l1-cache-pipeline-ooo]] - Explains CPU store buffers as core-private queues for pending stores, distinguishing them from L1 D-cache and from purely out-of-order machinery.
+- [[wiki/syntheses/cpu-cache-coherence-vs-special-concurrent-instructions]] - Explains why hardware cache coherence is the usual foundation for shared-memory CPUs instead of relying on compiler-detected concurrent variables and special broadcast load/store instructions.
 - [[wiki/syntheses/obsidian-cli-for-wiki-maintenance]] - Practical Obsidian CLI commands for linting links, auditing note structure, and safely refactoring the vault.
 
 ## Operational Docs
