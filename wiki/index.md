@@ -4,6 +4,8 @@ Read this file first when navigating the wiki.
 
 ## Sources
 
+- [[wiki/sources/anthropic-scaling-managed-agents]] - Source note for Anthropic's Managed Agents architecture post, covering session logs, harness/sandbox decoupling, credential vaulting, lazy sandbox provisioning, and many brains/many hands.
+- [[wiki/sources/herohua-managed-agents-architecture]] - Source note for Ying Hua's OS-lens interpretation of Managed Agents as a capability-style microkernel for agents.
 - [[wiki/sources/intel-lga1700-learning-notes]] - Source note for jjshao's Intel LGA 1700 and open X86 motherboard learning notes, covering socket signal groups, CPU/PCH routing, memory pins, and CPU power sense observations.
 - [[wiki/sources/karpathy-llm-wiki]] - Source note for Andrej Karpathy's canonical `LLM Wiki` gist, the seed source for this vault.
 - [[wiki/sources/obsidian-cli-help]] - Source note for Obsidian's CLI documentation, focused on vault-aware automation and inspection.
@@ -40,6 +42,7 @@ Read this file first when navigating the wiki.
 - [[wiki/syntheses/cpu-store-buffer-l1-cache-pipeline-ooo]] - Explains CPU store buffers as core-private queues for pending stores, distinguishing them from L1 D-cache and from purely out-of-order machinery.
 - [[wiki/syntheses/cpu-write-combining-purpose]] - Explains CPU write combining as buffering and merging adjacent stores into larger external write transactions for framebuffer, device, and streaming-write workloads.
 - [[wiki/syntheses/cpu-cache-coherence-vs-special-concurrent-instructions]] - Explains why hardware cache coherence is the usual foundation for shared-memory CPUs instead of relying on compiler-detected concurrent variables and special broadcast load/store instructions.
+- [[wiki/syntheses/managed-agents-harness-sandbox-separation]] - Synthesizes the Managed Agents discussion around harness/sandbox separation, tool-call control points, recovery limits, many brains/hands, and when the complexity is worth it.
 - [[wiki/syntheses/obsidian-cli-for-wiki-maintenance]] - Practical Obsidian CLI commands for linting links, auditing note structure, and safely refactoring the vault.
 
 ## Operational Docs
