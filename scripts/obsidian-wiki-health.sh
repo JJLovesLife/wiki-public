@@ -210,6 +210,14 @@ check_shapes 'wiki/entities' 'Entity schema' \
   'Related Pages' \
   'Open Questions'
 
+check_shapes 'wiki/projects' 'Project hub schema' \
+  'Overview' \
+  'Repositories And Scope' \
+  'Reading Map' \
+  'Evidence Base' \
+  'Open Questions' \
+  'Related Pages'
+
 check_shapes 'wiki/syntheses' 'Synthesis schema' \
   'Question' \
   'Answer' \

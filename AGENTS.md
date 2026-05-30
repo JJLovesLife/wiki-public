@@ -4,13 +4,17 @@ This file is the operating schema for this repository's LLM-maintained wiki.
 
 ## Purpose
 
-The goal is to maintain a persistent, interlinked markdown knowledge base in `wiki/` on top of immutable raw sources in `sources/files/` and code inspections anchored to specific repository snapshots. The wiki should accumulate summaries, cross-references, contradictions, and syntheses over time instead of re-deriving them from scratch for every query.
+The goal is to maintain a persistent, interlinked markdown knowledge base in `wiki/` on top of immutable document sources in `sources/files/`, code inspections anchored to specific repository snapshots, and durable syntheses from useful discussions. The wiki should accumulate summaries, cross-references, contradictions, code-reading notes, and syntheses over time instead of re-deriving them from scratch for every query.
 
 ## Ownership Boundaries
 
 - Immutable raw sources: `sources/files/`
   - Never edit a raw source after it has been added.
   - If a source needs correction, add a new source or capture the correction in a wiki page.
+- Code sources: repository snapshots inspected during code-reading work
+  - Do not copy whole repositories into `sources/files/` just to make them raw sources.
+  - Anchor code-derived claims to repo names, exact commits when available, scope paths, and line/function evidence.
+  - Do not edit inspected repositories unless the user explicitly asks for code changes in that repository.
 - LLM-owned knowledge layer: `wiki/`
   - The LLM may create and update these as part of normal ingest, query, and lint work.
 - Shared operational docs and helpers: `AGENTS.md`, `README.md`, `scripts/obsidian-wiki-health.sh`
@@ -25,6 +29,7 @@ The goal is to maintain a persistent, interlinked markdown knowledge base in `wi
 - `wiki/inspections/` holds unified notes for code-derived investigations that span multiple files, call sites, tests, configs, or layers within a repository snapshot.
 - `wiki/concepts/` holds synthesized concept pages when a topic earns its own durable page.
 - `wiki/entities/` holds pages for people, organizations, tools, places, or other named entities.
+- `wiki/projects/` holds repo, subsystem, or related-repository hub pages for code-reading clusters.
 - `wiki/syntheses/` holds durable answers that originated from queries.
 - `scripts/obsidian-wiki-health.sh` is an Obsidian-aware lint helper for the maintained `wiki/` layer.
 
@@ -35,11 +40,13 @@ The goal is to maintain a persistent, interlinked markdown knowledge base in `wi
 - Inspection pages: `wiki/inspections/slug.md`
 - Concept pages: `wiki/concepts/slug.md`
 - Entity pages: `wiki/entities/slug.md`
+- Project hub pages: `wiki/projects/slug.md`
 - Synthesis pages: `wiki/syntheses/slug.md`
 - Source slugs should be short, stable, and human-readable.
 - Inspection slugs should usually include the repository and subject, for example `mesa-radv-graphics-queue-family-support`.
 - If two sources would naturally share a slug, disambiguate with a clear qualifier such as a year, publisher, or format.
 - Default to explicit path-qualified wikilinks such as `[[wiki/sources/karpathy-llm-wiki]]` to avoid ambiguity.
+- Project hub slugs should normally name the repo, subsystem, or related repo set, for example `linux-drm-amdgpu` or `mesa-radv`.
 
 ## Global Conventions
 
@@ -47,11 +54,15 @@ The goal is to maintain a persistent, interlinked markdown knowledge base in `wi
 - Keep internal links dense enough that related pages are easy to follow in Obsidian.
 - Keep claims anchored to evidence pages. Concept and entity pages should include a `## Supporting Evidence` section. Synthesis pages should include `## Evidence` with citations back to relevant source notes, inspection notes, and, when useful, raw sources.
 - For code-derived claims, prefer a single inspection page in `wiki/inspections/` over fake per-file source notes. Anchor file and line references to `repo_commit` and prefer commit-pinned URLs when available.
+- Treat document sources and code sources differently. Document sources usually enter through `sources/files/` and `wiki/sources/`; code sources usually enter through `wiki/inspections/` and cite repository snapshots directly.
+- For synthesis pages, preserve evidence maturity when it matters. Useful labels include `source-backed`, `inspection-backed`, `conversation-derived`, and `needs-source`. A page can use more than one label.
+- Conversation-derived syntheses are allowed and useful, but their lower evidence maturity should be visible in `## Evidence` or page prose, especially when no raw source or code inspection anchors the claim yet.
 - Preserve uncertainty and disagreement. If newer sources conflict with older ones, note the conflict instead of silently overwriting it.
 - Git commit history is the canonical operational history for this wiki.
 - Prefer small, logically grouped commits so the vault's evolution stays easy to review.
 - Do not create a separate `templates/` system unless the user asks for it. The required page shapes live in this file.
 - Do not create concept pages that only restate a single source note unless the user asks for that extra structure or the page is clearly becoming a durable hub.
+- When a repo, subsystem, or related repo set has roughly 3 or more durable inspection/synthesis pages, consider creating or updating a project hub under `wiki/projects/` and linking it from `wiki/index.md`.
 
 ## Git Commit Message Schema
 
@@ -66,6 +77,7 @@ Git replaces `log.md` as the durable operational history for this vault. When cr
   - `synthesize` for durable query answers saved to the wiki.
   - `concept` for concept-page additions or major updates.
   - `entity` for entity-page additions or major updates.
+  - `project` for repo, subsystem, or related-repository hub pages.
   - `schema` for workflow, layout, naming, or page-shape changes.
   - `lint` for cross-link, metadata, wording, or structural maintenance.
   - `reorg` for renames, moves, and larger vault reshaping.
@@ -79,6 +91,7 @@ Examples:
 - `ingest: obsidian cli help`
 - `inspect: linux idr preload purpose`
 - `synthesize: obsidian cli for wiki maintenance`
+- `project: linux drm amdgpu reading map`
 - `schema: replace log.md with git history`
 - `lint: repair source-note cross-links`
 
@@ -148,11 +161,28 @@ Every file in `wiki/syntheses/` should include these sections:
 4. `## Follow-Ups`
 5. `## Related Pages`
 
+The `## Question` section may contain a precise question, a discussion entry point, or the context that motivated a multi-turn discussion. The `## Answer` section may be a direct answer or a structured synthesis with subheadings such as context, claims, mental model, tradeoffs, takeaways, and remaining doubts. Do not force exploratory multi-turn discussions into an artificial single-question/single-answer shape.
+
+The `## Evidence` section should state evidence maturity when useful, especially for conversation-derived or provisional pages. If no dedicated raw source or code inspection supports the claim yet, say so and leave an actionable follow-up.
+
+### Project Hub Pages
+
+Every file in `wiki/projects/` should include these sections:
+
+1. `## Overview`
+2. `## Repositories And Scope`
+3. `## Reading Map`
+4. `## Evidence Base`
+5. `## Open Questions`
+6. `## Related Pages`
+
+Project hubs are navigation and synthesis pages for code-reading clusters. They should group inspections and syntheses by repo, subsystem, component, or call path instead of duplicating all evidence inline.
+
 ## Core Workflows
 
 ### Ingest
 
-Use this workflow when the user asks to process a new source.
+Use this workflow when the user asks to process a new document source.
 
 1. Confirm the raw source exists in `sources/files/`.
 2. If the user only provided a URL, fetch a stable local copy into `sources/files/slug.ext` using a direct download tool such as `curl` so the stored raw source is an exact local copy without editing, normalizing, or reformatting the contents.
@@ -164,42 +194,48 @@ Use this workflow when the user asks to process a new source.
 
 ### Inspect
 
-Use this workflow when the user asks a question whose answer comes from source code, tests, configs, or multiple call sites rather than from a single document.
+Use this workflow when the user asks a question whose answer comes from source code, tests, configs, or multiple call sites rather than from a single document. For this wiki, open-source code-reading notes usually belong here.
 
 1. Confirm the repository and the revision or snapshot being inspected. When possible, record an exact commit hash.
-2. Read `wiki/index.md` first, then any existing inspection, concept, entity, or synthesis pages that seem related.
+2. Read `wiki/index.md` first, then any existing project hub, inspection, concept, entity, or synthesis pages that seem related.
 3. Trace the answer across the relevant files, call sites, tests, configs, logs, or layers instead of treating a single file as the whole source.
 4. Create or update a unified inspection note in `wiki/inspections/`, including YAML frontmatter metadata and exact evidence references.
-5. Update all materially affected concept, entity, or synthesis pages.
-6. Update `wiki/index.md` so every new or materially changed page is represented by a one-line summary.
-7. If the question is too broad for one inspection page, ask a short targeted question or split it into clearly named inspection pages.
+5. If there is an existing same-topic inspection, compare the inspected repo and commit before deciding whether to update it or create a new page for a different snapshot.
+6. Update all materially affected project hub, concept, entity, or synthesis pages.
+7. Update `wiki/index.md` so every new or materially changed page is represented by a one-line summary.
+8. If the question is too broad for one inspection page, ask a short targeted question, split it into clearly named inspection pages, or create/update a project hub that maps the cluster.
 
 ### Query
 
-Use this workflow when answering questions against the wiki.
+Use this workflow when answering questions against the wiki or turning useful discussion results into durable notes.
 
 1. Read `wiki/index.md` first.
 2. Read the most relevant pages from `wiki/`.
 3. Read page frontmatter and recent Git history when recency matters.
 4. Answer with citations to wiki pages and, when useful, raw source links.
-5. If the answer is durable and broadly useful, save it as a new or updated page under `wiki/syntheses/`. If the answer is primarily a repo-specific code investigation, save or update a page under `wiki/inspections/` instead. Then update `wiki/index.md`.
+5. If the answer is durable and broadly useful, save it as a new or updated page under `wiki/syntheses/`. If the answer is primarily a repo-specific code investigation, save or update a page under `wiki/inspections/` instead.
+6. When saving a synthesis, record evidence maturity in `## Evidence` when useful. Use `conversation-derived` or `needs-source` for valuable discussion outputs that are not yet backed by document sources or code inspections.
+7. Do not force a multi-turn exploratory discussion into a narrow Q&A if that loses the useful structure. Use the required synthesis headings, but make `## Question` the discussion context and structure `## Answer` around the actual takeaways.
+8. Update `wiki/index.md` so every new or materially changed page is represented by a one-line summary.
 
 ### Lint
 
 Use this workflow when checking the health of the wiki.
 
-1. Look for contradictions, stale claims, orphan pages, missing cross-references, missing source or inspection pages, broken links, and concept gaps.
+1. Look for contradictions, stale claims, orphan pages, missing cross-references, missing source or inspection pages, broken links, concept gaps, source debt, stale inspection snapshots, and unresolved follow-ups.
 2. When using Obsidian-aware link checks, treat `wiki/` as the primary health surface. Raw source copies under `sources/files/` may contain upstream wikilinks and should not automatically be treated as wiki breakage.
 3. Use `scripts/obsidian-wiki-health.sh` before creating a commit or during a review-oriented health check; do not run it after every routine wiki update.
-4. Make small maintenance fixes directly when the intent is clear.
-5. If the lint pass reveals a larger structural issue, summarize it clearly for the user.
-6. Update `wiki/index.md` whenever the lint pass produces durable changes.
+4. For semantic lint, scan `## Follow-Ups`, `## Open Questions`, `conversation-derived`, `needs-source`, and phrases such as `No dedicated raw source` to find source debt and useful next investigations.
+5. Make small maintenance fixes directly when the intent is clear.
+6. If the lint pass reveals a larger structural issue, summarize it clearly for the user.
+7. Update `wiki/index.md` whenever the lint pass produces durable changes.
 
 ## Operational Defaults
 
 - Start navigation in `wiki/index.md`.
 - Treat `wiki/sources/` as the canonical set of ingested document source notes.
 - Treat `wiki/inspections/` as the canonical set of code-derived investigation notes.
+- Treat `wiki/projects/` as the canonical set of repo, subsystem, and related-repository reading maps.
 - Treat Git history as the canonical operational history for the vault.
 - Keep raw sources immutable and keep the wiki as the maintained interpretation layer.
 - For Obsidian CLI linting, judge wiki health primarily on `wiki/`, not on upstream wikilinks embedded inside raw source copies.

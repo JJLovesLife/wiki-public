@@ -44,6 +44,7 @@ Read this file first when navigating the wiki.
 - [[wiki/syntheses/cpu-store-buffer-l1-cache-pipeline-ooo]] - Explains CPU store buffers as core-private queues for pending stores, distinguishing them from L1 D-cache and from purely out-of-order machinery.
 - [[wiki/syntheses/cpu-write-combining-purpose]] - Explains CPU write combining as buffering and merging adjacent stores into larger external write transactions for framebuffer, device, and streaming-write workloads.
 - [[wiki/syntheses/cpu-cache-coherence-vs-special-concurrent-instructions]] - Explains why hardware cache coherence is the usual foundation for shared-memory CPUs instead of relying on compiler-detected concurrent variables and special broadcast load/store instructions.
+- [[wiki/syntheses/llm-wiki-process-retrospective]] - Reviews how this vault's LLM wiki workflow has diverged from Karpathy's source-ingest pattern toward code sources, project hubs, discussion syntheses, evidence maturity, and semantic linting.
 - [[wiki/syntheses/managed-agents-harness-sandbox-separation]] - Synthesizes the Managed Agents discussion around harness/sandbox separation, tool-call control points, recovery limits, many brains/hands, and when the complexity is worth it.
 - [[wiki/syntheses/obsidian-cli-for-wiki-maintenance]] - Practical Obsidian CLI commands for linting links, auditing note structure, and safely refactoring the vault.
 
