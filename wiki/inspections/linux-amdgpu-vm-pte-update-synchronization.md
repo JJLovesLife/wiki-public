@@ -58,6 +58,7 @@ GPU 的传统执行模型则更像“提交 job -> 异步执行 -> fence 完成�
 
 ## Related Pages
 
+- [[wiki/projects/linux-drm-amdgpu]]
 - [[wiki/inspections/linux-dma-resv-shared-buffer-sync]]
 - [[wiki/inspections/linux-amdgpu-eviction-fence-userq-bo-move]]
 - [[wiki/inspections/linux-amdgpu-userq-bo-mmap-vs-eviction-manager]]

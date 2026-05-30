@@ -32,6 +32,7 @@
 
 ## Related Pages
 
+- [[wiki/projects/linux-drm-amdgpu]]
 - [[wiki/concepts/drm-vma-offset]]
 - [[wiki/inspections/linux-dma-resv-shared-buffer-sync]]
 - [[wiki/index]]

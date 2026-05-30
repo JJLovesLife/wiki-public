@@ -145,6 +145,7 @@ There are potential implementation risks in nearby error paths, such as `amdgpu_
 
 ## Related Pages
 
+- [[wiki/projects/linux-drm-amdgpu]]
 - [[wiki/inspections/linux-amdgpu-userq-bo-mmap-vs-eviction-manager]]
 - [[wiki/inspections/linux-dma-resv-shared-buffer-sync]]
 - [[wiki/index]]

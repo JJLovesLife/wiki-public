@@ -37,6 +37,10 @@ Read this file first when navigating the wiki.
 
 - None yet.
 
+## Projects
+
+- [[wiki/projects/linux-drm-amdgpu]] - Reading map for Linux DRM/amdgpu GPU memory-management notes, including `dma_resv`, user queue eviction fences, BO mmap versus GPU VA references, GPUVM PTE/TLB synchronization, DRM allocator helpers, and libdrm amdgpu VA allocation.
+
 ## Syntheses
 
 - [[wiki/syntheses/cache-coherence-write-ownership-and-atomics]] - Explains writable cache-line ownership, ordinary store ordering, atomic RMW behavior, x86 atomic load/store code generation, and why coherence is mainly per-location.

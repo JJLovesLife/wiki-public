@@ -67,4 +67,5 @@ scope_paths:
 
 ## Related Pages
 
+- [[wiki/projects/linux-drm-amdgpu]]
 - [[wiki/index]]

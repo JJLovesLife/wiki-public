@@ -37,6 +37,7 @@ Manager 文档也明确警告不要把它用于 VMEM object placement。它负�
 
 ## Related Pages
 
+- [[wiki/projects/linux-drm-amdgpu]]
 - [[wiki/concepts/drm-mm]]
 - [[wiki/inspections/linux-dma-resv-shared-buffer-sync]]
 - [[wiki/index]]

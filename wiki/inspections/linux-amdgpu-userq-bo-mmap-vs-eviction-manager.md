@@ -74,6 +74,7 @@ This inspection also does not analyze CPU/GPU cache coherency, explicit cache fl
 
 ## Related Pages
 
+- [[wiki/projects/linux-drm-amdgpu]]
 - [[wiki/inspections/linux-amdgpu-eviction-fence-userq-bo-move]]
 - [[wiki/inspections/linux-dma-resv-shared-buffer-sync]]
 - [[wiki/index]]

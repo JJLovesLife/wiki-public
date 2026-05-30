@@ -53,5 +53,6 @@ scope_paths:
 
 ## Related Pages
 
+- [[wiki/projects/linux-drm-amdgpu]]
 - [[wiki/inspections/linux-rcu-child-reference-lifetime]]
 - [[wiki/index]]
