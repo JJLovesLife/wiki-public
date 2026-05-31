@@ -43,6 +43,7 @@ Read this file first when navigating the wiki.
 
 ## Syntheses
 
+- [[wiki/syntheses/opencode-workspace-syncevent-sync]] - Explains OpenCode workspace and SyncEvent semantics: local git workspaces sharing one DB do not need remote sync, while remote workspaces exchange session event logs and replay them into their own DB projections.
 - [[wiki/syntheses/cache-coherence-write-ownership-and-atomics]] - Explains writable cache-line ownership, ordinary store ordering, atomic RMW behavior, x86 atomic load/store code generation, and why coherence is mainly per-location.
 - [[wiki/syntheses/cache-coherence-broadcast-scope]] - Explains why cache coherence does not require broadcasting every ordinary write to every core, contrasting local writes under ownership with snooping and directory-based protocols.
 - [[wiki/syntheses/cpu-store-buffer-l1-cache-pipeline-ooo]] - Explains CPU store buffers as core-private queues for pending stores, distinguishing them from L1 D-cache and from purely out-of-order machinery.
