@@ -41,6 +41,7 @@ Read this file first when navigating the wiki.
 ## Projects
 
 - [[wiki/projects/linux-drm-amdgpu]] - Reading map for Linux DRM/amdgpu GPU memory-management notes, including `dma_resv`, user queue eviction fences, BO mmap versus GPU VA references, GPUVM PTE/TLB synchronization, DRM allocator helpers, and libdrm amdgpu VA allocation.
+- [[wiki/projects/opencode]] - Reading map for OpenCode as a project, currently covering session/revert semantics, prompt concurrency boundaries, workspace sync/event replay, and practical usage observations while leaving room for CLI, TUI, server, SDK, config, tools, permissions, and editor-integration notes.
 
 ## Syntheses
 
