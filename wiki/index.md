@@ -12,6 +12,7 @@ Read this file first when navigating the wiki.
 
 ## Inspections
 
+- [[wiki/inspections/opencode-console-benchmark-evaluation-data-model]] - 解释 console benchmark/evaluation JSON model：一个 benchmark row 存 `model`、`agent` 和 loose `result` JSON，里面包含 task aggregates、repeated runs、score details 和 judge rationales，并记录 duplicated model/agent fields 与 commit semantics 的 ambiguity。
 - [[wiki/inspections/opencode-session-concurrent-prompt-instances]] - Explains that OpenCode session prompt serialization is process-local: one instance reuses/waits on an in-memory runner, while multiple instances can concurrently write prompts and run assistant loops against the same session.
 - [[wiki/inspections/opencode-session-revert-two-layer-semantics]] - Explains OpenCode session revert as two-layer state: file changes are reverted immediately, while messages DB cleanup is delayed until the pending revert is committed by a follow-up action.
 - [[wiki/inspections/mesa-radv-graphics-queue-family-detection]] - Traces RADV 如何判断 `vkGetPhysicalDeviceQueueFamilyProperties2` 是否 expose graphics queue family, from `radv_graphics_queue_enabled()` down to `DRM_AMDGPU_INFO` `available_rings`.
