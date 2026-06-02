@@ -46,6 +46,7 @@ Read this file first when navigating the wiki.
 
 ## Syntheses
 
+- [[wiki/syntheses/opencode-agent-switch-system-prompt-cache]] - 总结 OpenCode `agent switch` 和 `plan_exit`：当前实现会保留 prior messages，并用 last user message 的 `agent` 重新 assemble `system prompt`；这会影响 `prompt cache` 和 context coherence，也引出 timeline-style `system` control frames 对 future harness 的价值。
 - [[wiki/syntheses/opencode-workspace-syncevent-sync]] - Explains OpenCode workspace and SyncEvent semantics: local git workspaces sharing one DB do not need remote sync, while remote workspaces exchange session event logs and replay them into their own DB projections.
 - [[wiki/syntheses/cache-coherence-write-ownership-and-atomics]] - Explains writable cache-line ownership, ordinary store ordering, atomic RMW behavior, x86 atomic load/store code generation, and why coherence is mainly per-location.
 - [[wiki/syntheses/cache-coherence-broadcast-scope]] - Explains why cache coherence does not require broadcasting every ordinary write to every core, contrasting local writes under ownership with snooping and directory-based protocols.

@@ -13,6 +13,7 @@ The current evidence base is still uneven. Most inspected code so far is concent
 Current covered areas:
 
 - Session message, part, revert, and prompt-run behavior.
+- Agent switch、plan-to-build handoff、system prompt assembly 和 prompt cache implications。
 - Local multi-process concurrency boundaries around shared sessions and shared SQLite state.
 - Workspace targets, remote synchronization, event replay, and projected session state.
 - Practical usage observations such as active-file context injection.
@@ -36,6 +37,7 @@ Then read session state semantics:
 
 - [[wiki/inspections/opencode-session-revert-two-layer-semantics]] explains why OpenCode revert is two-layered: file changes are rolled back immediately, while message DB cleanup is delayed until a later action commits the pending revert.
 - [[wiki/inspections/opencode-session-concurrent-prompt-instances]] explains that prompt serialization is process-local. One instance serializes or reuses a per-session runner, but separate processes sharing the same DB can concurrently advance the same session.
+- [[wiki/syntheses/opencode-agent-switch-system-prompt-cache]] 总结 `agent switch` 和 `plan_exit` 如何保留 prior messages、append synthetic build-agent user message、重新 assemble `system prompt`，以及这对 `prompt cache`、context coherence 和 future harness protocol 的影响。
 
 Then read workspace and sync behavior:
 
@@ -51,6 +53,7 @@ Use this hub as the starting point for later OpenCode inspections even when the 
 
 - The inspection pages are code-derived and anchored to specific `opencode` commits with exact file/function evidence.
 - The workspace sync synthesis is inspection-backed from `opencode` snapshot `1afa9e32c9ebde43fc94782c883b422a3628daff`, but it is not yet split into its own dedicated inspection page.
+- The agent-switch/system-prompt synthesis is inspection-backed from `opencode` snapshot `1afa9e32c9ebde43fc94782c883b422a3628daff` for current implementation behavior, and conversation-derived for future harness design judgments.
 - Console benchmark inspection 是来自 console routes 和 schema 的 consumer-side evidence；对 result producer 和 exact grading formula 的 interpretation 仍然是 provisional。
 - The usage-tips concept page is conversation-derived from observed OpenCode behavior and should be upgraded with source or code evidence if it becomes operationally important.
 
@@ -58,6 +61,7 @@ Use this hub as the starting point for later OpenCode inspections even when the 
 
 - What are the main OpenCode architectural seams across CLI/TUI, server routes, SDK clients, core storage, and app UI?
 - How do agent, tool, permission, and config systems compose with session execution?
+- Would a plan-to-build compaction handoff improve OpenCode quality, token cost, and prompt-cache hit rate compared with preserving full plan-mode history?
 - Which editor integrations provide active-file context, and what is the authoritative code path for that injection?
 - How reliable is the remote workspace sync path under reconnects, partial replay, stolen sessions, and multiple writers?
 - Which OpenCode behaviors are stable product contracts versus incidental implementation details of the inspected snapshots?
@@ -71,3 +75,4 @@ Use this hub as the starting point for later OpenCode inspections even when the 
 - [[wiki/inspections/opencode-session-concurrent-prompt-instances]]
 - [[wiki/inspections/opencode-console-benchmark-evaluation-data-model]]
 - [[wiki/syntheses/opencode-workspace-syncevent-sync]]
+- [[wiki/syntheses/opencode-agent-switch-system-prompt-cache]]
