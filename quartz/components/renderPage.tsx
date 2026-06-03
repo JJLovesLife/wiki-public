@@ -16,6 +16,7 @@ import { styleText } from "util"
 import { resolveFrame } from "./frames"
 import type { TreeTransform } from "../plugins/types"
 import type { BuildCtx } from "../util/ctx"
+import type { PluginJsonEntry } from "../plugins/loader/types"
 
 interface RenderComponents {
   head: QuartzComponent
@@ -72,7 +73,53 @@ export function pageResources(
   })
 
   const contentIndexPath = joinSegments(baseDir, "static/contentIndex.json")
-  const contentIndexScript = `const fetchData = fetch("${contentIndexPath}").then(data => data.json())`
+  const graphOptions = getGraphOptions(ctx?.cfg.pluginEntries)
+  const contentIndexScript = `
+    const fetchData = fetch("${contentIndexPath}").then(data => data.json())
+    const graphOptions = ${JSON.stringify(graphOptions)}
+    const localGraphFetchData = fetchData.then(data => filterGraphData(data, graphOptions.localGraph || {}))
+    const globalGraphFetchData = fetchData.then(data => filterGraphData(data, graphOptions.globalGraph || {}))
+    function getGraphFetchData(graph) {
+      return graph?.classList?.contains("global-graph-container") ? globalGraphFetchData : localGraphFetchData
+    }
+    function filterGraphData(data, options) {
+      const excludePaths = options.excludePaths || []
+      const excludeFolderIndexes = Boolean(options.excludeFolderIndexes)
+
+      if (excludePaths.length === 0 && !excludeFolderIndexes) return data
+
+      function normalizeGraphSlug(value) {
+        const normalized = String(value || "")
+          .replace(/\\\\/g, "/")
+          .replace(/\\.(md|html)$/i, "")
+        const withoutIndex = normalized.replace(/(^|\\/)index$/i, "$1")
+        const stripped = withoutIndex.replace(/^\\/+|\\/+$/g, "")
+        return stripped === "" ? "/" : stripped
+      }
+
+      const excluded = new Set(excludePaths.map(normalizeGraphSlug))
+      function isFolderIndex(value) {
+        return /(^|\\/)_?index$/i.test(
+          String(value || "").replace(/\\\\/g, "/").replace(/\\.(md|html)$/i, ""),
+        )
+      }
+      function shouldExclude(value) {
+        return excluded.has(normalizeGraphSlug(value)) || (excludeFolderIndexes && isFolderIndex(value))
+      }
+
+      return Object.fromEntries(
+        Object.entries(data)
+          .filter(([slug]) => !shouldExclude(slug))
+          .map(([slug, details]) => [
+            slug,
+            {
+              ...details,
+              links: (details.links || []).filter((link) => !shouldExclude(link)),
+            },
+          ]),
+      )
+    }
+  `
 
   const resources: StaticResources = {
     css: [
@@ -107,6 +154,25 @@ export function pageResources(
   })
 
   return resources
+}
+
+function getPluginName(source: PluginJsonEntry["source"]): string {
+  if (typeof source === "object" && source !== null) {
+    if (source.name) return source.name
+    return getPluginName(source.repo)
+  }
+
+  if (source.startsWith("github:")) {
+    const withoutPrefix = source.replace("github:", "")
+    const [repoPath] = withoutPrefix.split("#")
+    return repoPath.split("/").pop() ?? source
+  }
+
+  return source.split(/[\\/]/).filter(Boolean).pop() ?? source
+}
+
+function getGraphOptions(entries?: PluginJsonEntry[]): Record<string, unknown> {
+  return entries?.find((entry) => entry.enabled && getPluginName(entry.source) === "graph")?.options ?? {}
 }
 
 /** @internal Exported for testing only. */

@@ -114,6 +114,14 @@ plugins:
       priority: 50
   - source: github:quartz-community/graph
     enabled: true
+    options:
+      globalGraph:
+        repelForce: 0.25
+        centerForce: 0.5
+        enableRadial: false
+        excludeFolderIndexes: true
+        excludePaths:
+          - wiki/index
     layout:
       position: right
       priority: 10

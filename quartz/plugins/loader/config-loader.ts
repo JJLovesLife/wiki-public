@@ -500,6 +500,7 @@ export async function loadQuartzConfig(
   return {
     configuration,
     plugins,
+    pluginEntries: enabledEntries,
   }
 }
 
@@ -791,6 +792,10 @@ function buildLayoutForEntries(
       component = reg.component as QuartzComponent
     }
 
+    if (name === "graph") {
+      patchGraphComponent(component)
+    }
+
     // Apply display modifier
     if (layout.display && layout.display !== "all") {
       component = applyDisplayWrapper(component, layout.display)
@@ -827,6 +832,16 @@ function buildLayoutForEntries(
   }
 
   return result
+}
+
+function patchGraphComponent(component: QuartzComponent): void {
+  const rewrite = (script: string) => script.replace(/await fetchData/g, "await getGraphFetchData(graph)")
+
+  if (typeof component.afterDOMLoaded === "string") {
+    component.afterDOMLoaded = rewrite(component.afterDOMLoaded)
+  } else if (Array.isArray(component.afterDOMLoaded)) {
+    component.afterDOMLoaded = component.afterDOMLoaded.map(rewrite)
+  }
 }
 
 function resolveGroups(
