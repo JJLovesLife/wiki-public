@@ -174,7 +174,8 @@ plugins:
   - source: github:quartz-community/footer
     enabled: true
     options:
-      links: {}
+      links:
+        GitHub: https://github.com/JJLovesLife/wiki-public
   - source: github:quartz-community/spacer
     enabled: true
     options: {}
