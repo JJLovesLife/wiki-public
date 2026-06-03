@@ -17,7 +17,6 @@ import { styleText } from "util"
 import { resolveFrame } from "./frames"
 import type { TreeTransform } from "../plugins/types"
 import type { BuildCtx } from "../util/ctx"
-import type { PluginJsonEntry } from "../plugins/loader/types"
 
 interface RenderComponents {
   head: QuartzComponent
@@ -74,16 +73,9 @@ export function pageResources(
   })
 
   const contentIndexPath = joinSegments(baseDir, "static/contentIndex.json")
-  const graphOptions = getGraphOptions(ctx?.cfg.pluginEntries)
   const contentIndexScript = `
     const fetchData = fetch("${contentIndexPath}").then(data => data.json())
-    const graphOptions = ${JSON.stringify(graphOptions)}
-    const localGraphFetchData = fetchData.then(data => filterGraphData(data, graphOptions.localGraph || {}))
-    const globalGraphFetchData = fetchData.then(data => filterGraphData(data, graphOptions.globalGraph || {}))
-    function getGraphFetchData(graph) {
-      return graph?.classList?.contains("global-graph-container") ? globalGraphFetchData : localGraphFetchData
-    }
-    function filterGraphData(data, options) {
+    window.filterGraphData = function filterGraphData(data, options) {
       const excludePaths = options.excludePaths || []
       const excludeFolderIndexes = Boolean(options.excludeFolderIndexes)
 
@@ -93,19 +85,30 @@ export function pageResources(
         const normalized = String(value || "")
           .replace(/\\\\/g, "/")
           .replace(/\\.(md|html)$/i, "")
-        const withoutIndex = normalized.replace(/(^|\\/)index$/i, "$1")
-        const stripped = withoutIndex.replace(/^\\/+|\\/+$/g, "")
+        const stripped = normalized.replace(/^\\/+|\\/+$/g, "")
         return stripped === "" ? "/" : stripped
       }
 
-      const excluded = new Set(excludePaths.map(normalizeGraphSlug))
+      function normalizeGraphFolderSlug(value) {
+        const normalized = normalizeGraphSlug(value).replace(/(^|\\/)index$/i, "$1")
+        const stripped = normalized.replace(/^\\/+|\\/+$/g, "")
+        return stripped === "" ? "/" : stripped
+      }
+
+      const excluded = new Set(
+        excludePaths.flatMap((path) => [normalizeGraphSlug(path), normalizeGraphFolderSlug(path)]),
+      )
       function isFolderIndex(value) {
         return /(^|\\/)_?index$/i.test(
           String(value || "").replace(/\\\\/g, "/").replace(/\\.(md|html)$/i, ""),
         )
       }
       function shouldExclude(value) {
-        return excluded.has(normalizeGraphSlug(value)) || (excludeFolderIndexes && isFolderIndex(value))
+        return (
+          excluded.has(normalizeGraphSlug(value)) ||
+          excluded.has(normalizeGraphFolderSlug(value)) ||
+          (excludeFolderIndexes && isFolderIndex(value))
+        )
       }
 
       return Object.fromEntries(
@@ -119,6 +122,9 @@ export function pageResources(
             },
           ]),
       )
+    }
+    window.getGraphData = async function getGraphData(options) {
+      return window.filterGraphData(await fetchData, options || {})
     }
   `
 
@@ -155,25 +161,6 @@ export function pageResources(
   })
 
   return resources
-}
-
-function getPluginName(source: PluginJsonEntry["source"]): string {
-  if (typeof source === "object" && source !== null) {
-    if (source.name) return source.name
-    return getPluginName(source.repo)
-  }
-
-  if (source.startsWith("github:")) {
-    const withoutPrefix = source.replace("github:", "")
-    const [repoPath] = withoutPrefix.split("#")
-    return repoPath.split("/").pop() ?? source
-  }
-
-  return source.split(/[\\/]/).filter(Boolean).pop() ?? source
-}
-
-function getGraphOptions(entries?: PluginJsonEntry[]): Record<string, unknown> {
-  return entries?.find((entry) => entry.enabled && getPluginName(entry.source) === "graph")?.options ?? {}
 }
 
 /** @internal Exported for testing only. */

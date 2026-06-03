@@ -1,6 +1,6 @@
 import { QuartzComponent } from "./components/types"
 import { ValidLocale } from "./i18n"
-import { PluginJsonEntry, PluginSpecifier } from "./plugins/loader/types"
+import { PluginSpecifier } from "./plugins/loader/types"
 import { PluginTypes } from "./plugins/types"
 import { Theme } from "./util/theme"
 
@@ -87,7 +87,6 @@ export interface QuartzConfig {
   configuration: GlobalConfiguration
   plugins: PluginTypes
   externalPlugins?: PluginSpecifier[]
-  pluginEntries?: PluginJsonEntry[]
 }
 
 export interface FullPageLayout {

@@ -500,7 +500,6 @@ export async function loadQuartzConfig(
   return {
     configuration,
     plugins,
-    pluginEntries: enabledEntries,
   }
 }
 
@@ -835,7 +834,17 @@ function buildLayoutForEntries(
 }
 
 function patchGraphComponent(component: QuartzComponent): void {
-  const rewrite = (script: string) => script.replace(/await fetchData/g, "await getGraphFetchData(graph)")
+  const rewrite = (script: string) => {
+    if (script.includes("window.getGraphData")) return script
+
+    const configMatch = script.match(
+      /var\s+([A-Za-z_$][\w$]*)\s*=\s*JSON\.parse\(\s*[A-Za-z_$][\w$]*\.dataset(?:\.cfg|\["cfg"\])\s*\|\|\s*"{}"\s*\)/,
+    )
+    const configVar = configMatch?.[1]
+    if (!configVar) return script
+
+    return script.replace(/await\s+fetchData/g, `await window.getGraphData(${configVar})`)
+  }
 
   if (typeof component.afterDOMLoaded === "string") {
     component.afterDOMLoaded = rewrite(component.afterDOMLoaded)
