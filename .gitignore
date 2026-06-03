@@ -6,3 +6,11 @@
 .obsidian/cache/
 .obsidian/indexed_db/
 .trash/
+
+# Quartz generated and local dependency state
+content/
+public/
+node_modules/
+.quartz/
+.quartz-cache/
+tsconfig.tsbuildinfo
