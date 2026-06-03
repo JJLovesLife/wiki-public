@@ -6,8 +6,10 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
+    "clean": "node scripts/clean-site.mjs",
     "prepare-site": "node scripts/prepare-site.mjs",
-    "build": "npm run prepare-site && npx quartz build",
+    "build": "npm run prepare-site && npm run restore-plugins && npx quartz build",
+    "rebuild": "npm run clean && npm run build",
     "deploy": "wrangler deploy",
     "deploy:preview": "wrangler versions upload",
     "dev": "wrangler dev",
@@ -17,7 +19,8 @@
     "check": "tsc --noEmit && npx prettier . --check",
     "format": "npx prettier . --write",
     "test": "tsx --test",
-    "install-plugins": "npx quartz plugin install --from-config"
+    "install-plugins": "npx quartz plugin install --from-config",
+    "restore-plugins": "npx quartz plugin install --clean"
   },
   "engines": {
     "npm": ">=10.9.2",
