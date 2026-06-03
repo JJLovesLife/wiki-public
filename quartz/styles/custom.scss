@@ -1,3 +1,21 @@
 @use "./variables.scss" as *;
 
 // put your custom CSS here!
+
+.global-disclaimer {
+  box-sizing: border-box;
+  max-width: calc(100% - 4rem);
+  margin: 2rem auto -1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--lightgray);
+  border-left: 4px solid var(--secondary);
+  border-radius: 8px;
+  background: var(--highlight);
+  color: var(--darkgray);
+  font-size: 0.95rem;
+  line-height: 1.6;
+
+  @media all and not ($desktop) {
+    max-width: calc(100% - 2rem);
+  }
+}

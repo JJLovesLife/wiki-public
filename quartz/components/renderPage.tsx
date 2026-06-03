@@ -1,6 +1,7 @@
 import { render } from "preact-render-to-string"
 import { QuartzComponent, QuartzComponentProps } from "./types"
 import BodyConstructor from "./Body"
+import GlobalDisclaimer from "./GlobalDisclaimer"
 import {
   CSSResource,
   JSResource,
@@ -415,6 +416,7 @@ export function renderPage(
       <body data-slug={slug} data-basepath={basePath}>
         {frame.css && <style dangerouslySetInnerHTML={{ __html: frame.css }} />}
         <div id="quartz-root" class="page" data-frame={frame.name}>
+          <GlobalDisclaimer />
           <Body {...componentData}>
             {[
               frame.render({
