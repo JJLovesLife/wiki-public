@@ -8,7 +8,11 @@
   "scripts": {
     "prepare-site": "node scripts/prepare-site.mjs",
     "build": "npm run prepare-site && npx quartz build",
+    "deploy": "wrangler deploy",
+    "deploy:preview": "wrangler versions upload",
+    "dev": "wrangler dev",
     "preview": "npm run prepare-site && npx quartz build --serve",
+    "start": "wrangler dev",
     "quartz": "./quartz/bootstrap-cli.mjs",
     "check": "tsc --noEmit && npx prettier . --check",
     "format": "npx prettier . --write",
@@ -77,6 +81,7 @@
     "esbuild": "^0.27.2",
     "prettier": "^3.8.1",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "latest"
   }
 }
