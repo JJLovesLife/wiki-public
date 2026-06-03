@@ -8,7 +8,7 @@
   "scripts": {
     "clean": "node scripts/clean-site.mjs",
     "prepare-site": "node scripts/prepare-site.mjs",
-    "build": "npm run prepare-site && npm run restore-plugins && npx quartz build",
+    "build": "if [ \"$(git rev-parse --is-shallow-repository 2>/dev/null)\" = \"true\" ]; then git fetch --unshallow; fi && npm run prepare-site && npm run restore-plugins && npx quartz build",
     "rebuild": "npm run clean && npm run build",
     "deploy": "wrangler deploy",
     "deploy:preview": "wrangler versions upload",
